@@ -1,2 +1,5 @@
-# Patch ainda não gerado.
-# Este arquivo será substituído por um patch unificado validado.
+--- a/usr/share/X11/xkb/symbols/us
++++ b/usr/share/X11/xkb/symbols/us
+@@ -133 +133 @@
+-    key <AB03> { [	   c,          C,     copyright,             cent ] };
++    key <AB03> { [	   c,          C,      ccedilla,         Ccedilla ] };
