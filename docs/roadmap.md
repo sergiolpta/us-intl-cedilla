@@ -74,10 +74,10 @@
 - [x] Criar templates de issues.
 - [x] Criar template de pull request.
 - [x] Configurar integração contínua.
-- [ ] Publicar a versão `0.1.0`.
+- [x] Publicar a versão `0.1.0`.
 - [x] Criar instruções completas de instalação.
 - [ ] Adicionar capturas de tela.
-- [ ] Publicar a primeira release.
+- [x] Publicar a primeira release.
 
 ## Futuro
 

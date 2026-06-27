@@ -12,8 +12,6 @@ O formato segue a ideia do Keep a Changelog, e o projeto pretende adotar version
 - Validar no Debian.
 - Validar no Pop!_OS.
 - Documentar diferenças entre versões do `xkb-data`.
-- Publicar a versão `0.1.0`.
-- Criar uma release no GitHub.
 
 ## [0.1.0] - 2026-06-27
 
