@@ -80,7 +80,7 @@ A instalação pública ainda não está disponível.
 Quando a primeira versão estável for publicada, o procedimento previsto será:
 
 ```bash
-git clone https://github.com/USUARIO/us-intl-cedilla.git
+git clone https://github.com/sergiolpta/us-intl-cedilla.git
 cd us-intl-cedilla
 sudo ./install.sh
 ```
