@@ -2,25 +2,50 @@
 
 Layout de teclado para Linux destinado a usuários de teclado físico ANSI americano que escrevem em português.
 
-O projeto mantém o comportamento do layout **English (US, intl., with dead keys)** e altera somente as combinações `AltGr + C` e `AltGr + Shift + C`.
+O projeto preserva o comportamento do layout **English (US, intl., with dead keys)** e altera somente as combinações:
 
-> **Aviso:** o projeto ainda está em desenvolvimento. Os scripts de instalação e remoção ainda não devem ser utilizados.
+| Combinação | Resultado |
+| --- | --- |
+| `AltGr + C` | `ç` |
+| `AltGr + Shift + C` | `Ç` |
+
+## Estado do projeto
+
+O projeto está em fase de pré-release.
+
+Os scripts de instalação, restauração e desinstalação já foram implementados e testados em sandbox no Linux Mint 22.3 com o pacote:
+
+```text
+xkb-data 2.41-2ubuntu1.1
+```
+
+O sistema real usado no desenvolvimento permaneceu sem alterações durante os testes privilegiados.
+
+Compatibilidade validada:
+
+- Linux Mint 22.3
+
+Compatibilidade planejada, mas ainda não validada em ambiente real:
+
+- Ubuntu
+- Debian
+- Pop!_OS
 
 ## Problema
 
 O layout US International permite digitar normalmente caracteres acentuados:
 
 | Combinação | Resultado |
-| ---------- | --------- |
-| `'` + `a`  | `á`       |
-| `'` + `e`  | `é`       |
-| `'` + `i`  | `í`       |
-| `'` + `o`  | `ó`       |
-| `'` + `u`  | `ú`       |
-| `~` + `a`  | `ã`       |
-| `~` + `o`  | `õ`       |
-| `^` + `a`  | `â`       |
-| `^` + `e`  | `ê`       |
+| --- | --- |
+| `'` + `a` | `á` |
+| `'` + `e` | `é` |
+| `'` + `i` | `í` |
+| `'` + `o` | `ó` |
+| `'` + `u` | `ú` |
+| `~` + `a` | `ã` |
+| `~` + `o` | `õ` |
+| `^` + `a` | `â` |
+| `^` + `e` | `ê` |
 
 Porém, a definição da tecla física `C` no layout `us(intl)` é:
 
@@ -30,10 +55,10 @@ key <AB03> { [ c, C, copyright, cent ] };
 
 Isso produz:
 
-| Combinação          | Resultado padrão |
-| ------------------- | ---------------- |
-| `AltGr + C`         | `©`              |
-| `AltGr + Shift + C` | `¢`              |
+| Combinação | Resultado padrão |
+| --- | --- |
+| `AltGr + C` | `©` |
+| `AltGr + Shift + C` | `¢` |
 
 Essas combinações são pouco úteis para usuários que escrevem em português e precisam digitar `ç` e `Ç`.
 
@@ -45,47 +70,62 @@ O projeto altera exclusivamente a definição da tecla `<AB03>` para:
 key <AB03> { [ c, C, ccedilla, Ccedilla ] };
 ```
 
-O resultado será:
+Nenhuma outra tecla do layout US International deve ser modificada.
 
-| Combinação          | Resultado |
-| ------------------- | --------- |
-| `AltGr + C`         | `ç`       |
-| `AltGr + Shift + C` | `Ç`       |
+## Como funciona
 
-Nenhuma outra tecla do layout US International deverá ser modificada.
+O projeto trabalha diretamente sobre:
 
-## Objetivos
+```text
+/usr/share/X11/xkb/symbols/us
+```
 
-* Preservar a experiência do teclado ANSI americano para programação.
-* Adicionar acesso direto a `ç` e `Ç`.
-* Alterar somente a definição necessária.
-* Fazer backup antes de qualquer modificação.
-* Validar o arquivo antes e depois da instalação.
-* Disponibilizar restauração e remoção seguras.
-* Não editar manualmente os arquivos XML de regras do XKB.
+O instalador:
 
-## Compatibilidade planejada
+1. valida o sistema e o pacote `xkb-data`;
+2. confirma o estado original do layout;
+3. cria backup com metadata e checksum SHA-256;
+4. aplica o patch em arquivo temporário;
+5. valida o resultado;
+6. substitui o arquivo somente após todas as verificações.
 
-O suporte inicial será voltado às seguintes distribuições:
+Os backups são armazenados em:
 
-* Linux Mint
-* Ubuntu
-* Debian
-* Pop!_OS
+```text
+/var/backups/us-intl-cedilla
+```
+
+O diretório é protegido e acessível somente pelo usuário `root`.
 
 ## Instalação
 
-A instalação pública ainda não está disponível.
-
-Quando a primeira versão estável for publicada, o procedimento previsto será:
+Clone o repositório:
 
 ```bash
 git clone https://github.com/sergiolpta/us-intl-cedilla.git
 cd us-intl-cedilla
+```
+
+Execute as verificações:
+
+```bash
+./tests/regression.sh
+./tests/verify.sh
+```
+
+Instale:
+
+```bash
 sudo ./install.sh
 ```
 
-O endereço será atualizado após a criação do repositório no GitHub.
+Depois recarregue o layout ou reinicie a sessão gráfica:
+
+```bash
+setxkbmap us intl
+```
+
+> Em sessões Wayland, o comando `setxkbmap` pode não controlar diretamente o compositor. Nesse caso, encerre e inicie novamente a sessão ou selecione novamente o layout nas configurações do ambiente gráfico.
 
 ## Verificação
 
@@ -93,47 +133,109 @@ O endereço será atualizado após a criação do repositório no GitHub.
 ./tests/verify.sh
 ```
 
+Quando instalado, o resultado deve indicar:
+
+```text
+Estado do layout: modified
+```
+
+Quando não instalado ou após restauração:
+
+```text
+Estado do layout: original
+```
+
 ## Restauração
+
+A restauração repõe o backup original validado e preserva os arquivos de backup:
 
 ```bash
 sudo ./restore.sh
 ```
 
-## Remoção
+O script:
+
+- seleciona o backup válido mais recente;
+- valida metadata e checksum;
+- confirma que o backup contém o layout original;
+- executa substituição segura;
+- confirma o estado final;
+- é idempotente.
+
+## Desinstalação
+
+A desinstalação restaura o layout oficial e remove os dados persistentes do projeto:
 
 ```bash
 sudo ./uninstall.sh
 ```
 
+O script:
+
+- restaura o layout quando necessário;
+- confirma o estado original;
+- remove o diretório de backups;
+- remove o diretório de estado, caso exista;
+- preserva o repositório clonado;
+- é idempotente.
+
 ## Segurança
 
-O instalador deverá interromper a execução quando:
+Os scripts interrompem a execução quando:
 
-* a distribuição não for suportada;
-* o pacote `xkb-data` não estiver instalado;
-* o arquivo de símbolos esperado não existir;
-* a definição original não for encontrada;
-* a alteração estiver aplicada de maneira inconsistente;
-* o backup não puder ser criado ou validado;
-* o layout modificado não passar nas verificações.
+- não são executados com privilégios administrativos;
+- comandos obrigatórios não estão disponíveis;
+- o arquivo XKB esperado não existe ou não pode ser lido;
+- o arquivo alvo é um link simbólico;
+- a variante `intl` não é encontrada;
+- o estado do layout é inconsistente;
+- o backup ou metadata não passam nas validações;
+- o checksum SHA-256 não corresponde;
+- o resultado final não corresponde ao estado esperado.
 
-O projeto não editará manualmente os arquivos `evdev.xml` ou `base.xml`.
+O projeto não edita manualmente os arquivos:
 
-## Estado do projeto
+```text
+evdev.xml
+base.xml
+```
 
-Projeto em desenvolvimento inicial.
+## Limitações atuais
 
-Consulte também:
+- Alterações diretas em arquivos do pacote `xkb-data` podem ser sobrescritas por atualizações do sistema.
+- O projeto ainda não possui integração contínua.
+- ShellCheck ainda não está integrado ao fluxo.
+- Ubuntu, Debian e Pop!_OS ainda precisam de validação real.
+- Ainda não existe pacote `.deb`.
 
-* [`CHANGELOG.md`](CHANGELOG.md)
-* [`docs/architecture.md`](docs/architecture.md)
-* [`docs/roadmap.md`](docs/roadmap.md)
+## Estrutura do projeto
+
+```text
+us-intl-cedilla/
+├── README.md
+├── LICENSE
+├── CHANGELOG.md
+├── config.sh
+├── install.sh
+├── restore.sh
+├── uninstall.sh
+├── patches/
+│   └── us-intl-cedilla.patch
+├── tests/
+│   ├── verify.sh
+│   └── regression.sh
+├── docs/
+│   ├── architecture.md
+│   ├── roadmap.md
+│   └── screenshots/
+└── .github/
+```
 
 ## Contribuição
 
-Relatos de erros, testes em outras distribuições e melhorias serão bem-vindos após a publicação do repositório.
+Relatos de erros, testes em outras distribuições e melhorias são bem-vindos.
 
-Mudanças em outras teclas deverão ser discutidas separadamente, pois o escopo principal é modificar somente a tecla `<AB03>`.
+Mudanças em outras teclas devem ser discutidas separadamente, pois o escopo principal é modificar somente a tecla `<AB03>`.
 
 ## Licença
 
