@@ -1,5 +1,7 @@
 # US International + Ç
 
+**Português** | [English](README.en.md)
+
 Layout de teclado para Linux destinado a usuários de teclado físico ANSI americano que escrevem em português.
 
 O projeto preserva o comportamento do layout **English (US, intl., with dead keys)** e altera somente as combinações:
@@ -200,19 +202,31 @@ evdev.xml
 base.xml
 ```
 
+## Verificações automáticas de qualidade
+
+Cada push e pull request para a branch `main` executa no GitHub Actions:
+
+- validação da sintaxe Bash;
+- análise com ShellCheck;
+- teste de regressão.
+
+O teste de regressão confirma que somente a tecla `<AB03>` é alterada.
+
 ## Limitações atuais
 
 - Alterações diretas em arquivos do pacote `xkb-data` podem ser sobrescritas por atualizações do sistema.
-- O projeto ainda não possui integração contínua.
-- ShellCheck ainda não está integrado ao fluxo.
 - Ubuntu, Debian e Pop!_OS ainda precisam de validação real.
 - Ainda não existe pacote `.deb`.
+- O comportamento de ativação no Wayland pode variar conforme o ambiente gráfico e o compositor.
+- A reaplicação automática após atualizações do pacote `xkb-data` ainda não foi implementada.
 
 ## Estrutura do projeto
 
 ```text
 us-intl-cedilla/
 ├── README.md
+├── README.en.md
+├── CONTRIBUTING.md
 ├── LICENSE
 ├── CHANGELOG.md
 ├── config.sh
@@ -229,11 +243,18 @@ us-intl-cedilla/
 │   ├── roadmap.md
 │   └── screenshots/
 └── .github/
+    ├── workflows/
+    │   └── quality.yml
+    ├── ISSUE_TEMPLATE/
+    │   └── bug_report.md
+    └── pull_request_template.md
 ```
 
 ## Contribuição
 
 Relatos de erros, testes em outras distribuições e melhorias são bem-vindos.
+
+Leia o arquivo [`CONTRIBUTING.md`](CONTRIBUTING.md) antes de enviar alterações.
 
 Mudanças em outras teclas devem ser discutidas separadamente, pois o escopo principal é modificar somente a tecla `<AB03>`.
 
