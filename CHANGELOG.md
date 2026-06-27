@@ -6,6 +6,10 @@ O formato segue a ideia do Keep a Changelog, e o projeto pretende adotar version
 
 ## [Unreleased]
 
+### Added
+
+- Guia de contribuição com regras de segurança, validação e envio de pull requests.
+
 ### Remaining
 
 - Validar no Ubuntu.
