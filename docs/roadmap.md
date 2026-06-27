@@ -71,8 +71,8 @@
 
 ## Fase 7 — GitHub e primeira versão
 
-- [ ] Criar templates de issues.
-- [ ] Criar template de pull request.
+- [x] Criar templates de issues.
+- [x] Criar template de pull request.
 - [x] Configurar integração contínua.
 - [ ] Publicar a versão `0.1.0`.
 - [x] Criar instruções completas de instalação.
