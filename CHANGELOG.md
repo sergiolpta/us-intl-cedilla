@@ -6,6 +6,17 @@ O formato segue a ideia do Keep a Changelog, e o projeto pretende adotar version
 
 ## [Unreleased]
 
+### Remaining
+
+- Validar no Ubuntu.
+- Validar no Debian.
+- Validar no Pop!_OS.
+- Documentar diferenças entre versões do `xkb-data`.
+- Publicar a versão `0.1.0`.
+- Criar uma release no GitHub.
+
+## [0.1.0] - 2026-06-27
+
 ### Added
 
 - Estrutura inicial do repositório.
@@ -34,12 +45,3 @@ O formato segue a ideia do Keep a Changelog, e o projeto pretende adotar version
 - README atualizado para documentar instalação, restauração e desinstalação.
 - Roadmap atualizado para refletir as etapas concluídas.
 - Estado do projeto definido como pré-release em vez de desenvolvimento inicial.
-
-### Remaining
-
-- Validar no Ubuntu.
-- Validar no Debian.
-- Validar no Pop!_OS.
-- Documentar diferenças entre versões do `xkb-data`.
-- Publicar a versão `0.1.0`.
-- Criar uma release no GitHub.
