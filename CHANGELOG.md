@@ -18,6 +18,8 @@ O formato segue a ideia do Keep a Changelog, e o projeto pretende adotar version
 - Instalador com backup, metadata e checksum SHA-256.
 - Aplicação do patch em arquivo temporário antes da substituição final.
 - Rollback automático do instalador em caso de falha.
+- Testes de falhas simuladas para estados XKB inválidos, variante `intl` ausente e rollback após falha de instalação.
+- Workflow de integração contínua com validação de sintaxe Bash, ShellCheck e teste de regressão.
 - Restauração com seleção e validação do backup mais recente.
 - Validação do metadata, arquivo de origem e checksum na restauração.
 - Desinstalação segura com restauração prévia do layout.
@@ -35,9 +37,6 @@ O formato segue a ideia do Keep a Changelog, e o projeto pretende adotar version
 
 ### Remaining
 
-- Adicionar ShellCheck.
-- Criar testes de falhas simuladas.
-- Configurar integração contínua.
 - Validar no Ubuntu.
 - Validar no Debian.
 - Validar no Pop!_OS.

@@ -56,7 +56,7 @@
 - [x] Testar instalação repetida.
 - [x] Testar restauração repetida.
 - [x] Testar desinstalação repetida.
-- [ ] Testar falhas simuladas.
+- [x] Testar falhas simuladas.
 - [x] Confirmar que nenhuma outra tecla foi alterada.
 - [x] Confirmar restauração byte a byte com `cmp`.
 
