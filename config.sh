@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC2034 # Variáveis compartilhadas com scripts que carregam este arquivo.
 readonly PROJECT_NAME="us-intl-cedilla"
 
-readonly PROJECT_ROOT="$(
+PROJECT_ROOT="$(
     cd "$(dirname "${BASH_SOURCE[0]}")" &&
     pwd
 )"
+readonly PROJECT_ROOT
 
 readonly XKB_PACKAGE="xkb-data"
 readonly XKB_SYMBOLS_FILE="/usr/share/X11/xkb/symbols/us"

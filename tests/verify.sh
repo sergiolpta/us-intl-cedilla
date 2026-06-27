@@ -6,7 +6,7 @@ PROJECT_ROOT="$(
     pwd
 )"
 
-# shellcheck source=../config.sh
+# shellcheck disable=SC1091 # Caminho calculado dinamicamente a partir de PROJECT_ROOT.
 source "$PROJECT_ROOT/config.sh"
 
 pass() {

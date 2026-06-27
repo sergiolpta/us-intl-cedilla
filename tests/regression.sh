@@ -28,7 +28,7 @@ grep -Fqx -- "$EXPECTED_NEW" "$PATCH_FILE" \
     || fail "linha modificada esperada não encontrada"
 
 functional_changes="$(
-    grep -E '^[+-][[:space:]]+key <' "$PATCH_FILE" | wc -l
+    grep -cE '^[+-][[:space:]]+key <' "$PATCH_FILE"
 )"
 
 [[ "$functional_changes" -eq 2 ]] \
