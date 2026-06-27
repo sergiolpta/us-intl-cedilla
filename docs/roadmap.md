@@ -52,7 +52,7 @@
 - [x] Implementar `tests/verify.sh`.
 - [x] Implementar `tests/regression.sh`.
 - [x] Validar sintaxe dos scripts com `bash -n`.
-- [ ] Adicionar ShellCheck.
+- [x] Adicionar ShellCheck.
 - [x] Testar instalação repetida.
 - [x] Testar restauração repetida.
 - [x] Testar desinstalação repetida.
@@ -73,7 +73,7 @@
 
 - [ ] Criar templates de issues.
 - [ ] Criar template de pull request.
-- [ ] Configurar integração contínua.
+- [x] Configurar integração contínua.
 - [ ] Publicar a versão `0.1.0`.
 - [x] Criar instruções completas de instalação.
 - [ ] Adicionar capturas de tela.
